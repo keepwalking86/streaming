@@ -278,6 +278,8 @@ Link về videojs: [https://github.com/videojs/http-streaming](https://github.co
 
 Trên Nginx web server, chúng ta sẽ tạo tệp tin index.html với nội dung sau vào root directory:
 
+
+```
 <!DOCTYPE html>
 <html>
 <head>
@@ -321,6 +323,7 @@ Trên Nginx web server, chúng ta sẽ tạo tệp tin index.html với nội du
 
 </body>
 </html>
+```
 
 Trong tệp index.html chúng ta sẽ vào đường dẫn chứa tệp tin playlist mà đã convert ở Step2. Khi đó vào thông tin đường dẫn URL ở đây là http://192.168.10.113/hls/index.m3u8
 
