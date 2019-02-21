@@ -193,9 +193,9 @@ Cuối cùng nhấn Play để phát video.
 
 Chúng ta sẽ cấu hình để cho phép video player phát video qua giao thức HLS (Apple HTTP Live Streaming).
 
-### <a name="install-ffmpeg"4.1 Cài đặt Ffmpeg</a>
+### <a name="install-ffmpeg">4.1 Cài đặt Ffmpeg</a>
 
-Sử dụng script [Installing FFmpeg on Linux](../scritps/install_ffmpeg.sh)
+Sử dụng script [Installing FFmpeg on Linux](../scripts/install_ffmpeg.sh)
 
 Nếu chỉ sử dụng một thư viện có sẵn thì cài đặt đơn giản như sau trên CentOS
 
@@ -203,7 +203,7 @@ Nếu chỉ sử dụng một thư viện có sẵn thì cài đặt đơn giả
 
 Trong phần [Giới thiệu FFmpeg](../docs/About-FFmpeg.md), cũng đã giới thiệu và cách sử dụng cơ bản FFmpeg.
 
-### <a name="mp4-to-hls>4.2 Convert tệp vod.mp4 sang HLS</a>
+### <a name="mp4-to-hls">4.2 Convert tệp vod.mp4 sang HLS</a>
 
 Trước khi convert, chúng ta thực hiện copy/download tệp tin video lên server (ví dụ tệp tin là vod.mp4)
 
