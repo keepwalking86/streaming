@@ -16,6 +16,7 @@
   - [5.1 Cấu hình Nginx để làm live streaming server](#nginx-live-streaming)
   - [5.2 Thực hiện live streaming từ mobile](#live-streaming-mobile)
   - [5.3 Kiểm tra quá trình Live Streaming](#check-streaming)
+  - [5.4 Record Streaming](#record-streaming)
 - [6. HLS encryption in the rtmp module](#hls-encryption)
 - [7. Một số trang tham khảo](#reference)
 
@@ -553,6 +554,31 @@ Truy cập **http://192.168.10.113/stat**
 <p align="center"> 
 <img src="../images/streaming-statistics2.png" />
 </p>
+
+### <a name="record-streaming">5.4 Record Streaming</a>
+
+RTMP cho phép hỗ trợ ghi video trong quá trình live streaming. Streaming được ghi lại trong định dạng tệp flv.
+
+Cấu hình record như sau:
+
+```
+rtmp {
+    server {
+        listen 1935;
+        application hls {
+            live on;
+            recorder video {
+               record all;
+               record_path /tmp/rec;
+               record_notify on;
+               #Sets record file suffix
+               #(Record suffix can be a pattern in strftime format)
+               record_suffix -%d-%b-%y-%T.flv;
+           }
+       }
+    }
+}
+```
 
 ## <a name="hls-encryption">6. HLS encryption in the rtmp module</a>
 
