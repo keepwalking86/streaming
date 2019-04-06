@@ -1,17 +1,12 @@
-#FROM alpine
-FROM centos:7
-#install essential package to compile nginx & ffmpeg
-#RUN apk add --no-cache build-base openssl openssl-dev zlib-dev linux-headers pcre-dev ffmpeg ffmpeg-dev
-RUN yum -y install make gcc gcc-c++ pcre-devel zlib-devel openssl-devel wget
-#install ffmpeg
-RUN yum -y install epel-release  &&\
-	rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-1.el7.nux.noarch.rpm &&\
-	yum -y install ffmpeg ffmpeg-devel
+FROM alpine:3.8
+
+#Install essential package to compile nginx & ffmpeg
+RUN apk add --no-cache build-base openssl openssl-dev zlib-dev linux-headers pcre-dev ffmpeg ffmpeg-dev
 
 WORKDIR /opt
 
-#create directories
-RUN mkdir /data /static
+#Create contain directories
+RUN cd /var && mkdir -p vod live static hls
 
 #Get nginx-vod module
 RUN wget https://github.com/kaltura/nginx-vod-module/archive/1.24.tar.gz &&\
@@ -32,8 +27,7 @@ RUN wget http://nginx.org/download/nginx-1.14.2.tar.gz &&\
 	rm -rf nginx-1.14.2.tar.gz
 
 #Create nginx user"
-#RUN adduser -h /dev/null -D -s /sbin/nologin nginx #for alpine
-RUN useradd -d /dev/null -c "nginx user" -s /sbin/nologin nginx #FOR CENTOS
+RUN adduser -h /dev/null -D -s /sbin/nologin nginx
 
 # Build nginx with nginx-rtmp & nginx-vod
 RUN cd /opt/nginx &&\
@@ -42,8 +36,8 @@ RUN cd /opt/nginx &&\
 	--sbin-path=/usr/sbin/nginx \
 	--user=nginx \
 	--group=nginx \
-	--error-log-path=/logs/error.log \
-	--http-log-path=/logs/access.log \
+	--error-log-path=logs/error.log \
+	--http-log-path=logs/access.log \
 	--add-module=../nginx-vod-module \
 	--add-module=../nginx-rtmp-module \
 	--without-mail_pop3_module \
@@ -54,14 +48,17 @@ RUN cd /opt/nginx &&\
 	--without-http_scgi_module \
 	--with-http_ssl_module \
 	--with-file-aio \
-	--with-http_sub_module \
+	--with-cc-opt="-O3" \
 	--with-threads \
+	--with-http_sub_module \
 	--with-http_stub_status_module &&\
 	make && make install
 
-#Add nginx configuration files
+#Add nginx configuration file
 ADD nginx.conf /etc/nginx/nginx.conf
-ADD static /static
+
+#Copy stat.xsl (XML stylesheet) to view RTMP stats
+RUN cp /opt/nginx-rtmp-module/stat.xsl /var/static
 
 #Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
