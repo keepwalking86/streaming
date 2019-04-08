@@ -8,6 +8,8 @@ Một số nội dung streaming media, gồm:
 
 - [Streaming media server với Nginx và nginx-rtmp module ](docs/Streaming-server-with-nginx-rtmp.md)
 
+- [Dựng streaming media server với Docker](https://github.com/keepwalking86/streaming/tree/master/docker)
+
 <p align="center"> 
 <img src="images/streaming.png" />
 </p>
