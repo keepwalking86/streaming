@@ -10,9 +10,11 @@
 
 **Step3: Get video mp4 to vod contain directory**
 
->docker exec -it nginx-stream /bin/sh
->cd /var/vod
->wget https://github.com/keepwalking86/streaming/raw/master/video/bbb.mp4
+```
+docker exec -it nginx-stream /bin/sh
+cd /var/vod
+wget https://github.com/keepwalking86/streaming/raw/master/video/bbb.mp4
+```
 
 **Step4: Creating web server**
 
@@ -20,13 +22,15 @@
 
 **Step5: Add vod.html to Root Directory**
 
->docker exec -it nginx bash
->cd /usr/share/nginx/html && apt-get update && apt-get install wget -y
->wget https://raw.githubusercontent.com/keepwalking86/streaming/master/web/index.html -O vod.html
+```
+docker exec -it nginx bash
+cd /usr/share/nginx/html && apt-get update && apt-get install wget -y
+wget https://raw.githubusercontent.com/keepwalking86/streaming/master/web/index.html -O vod.html
+```
 
 **Step6: Replace source src in vod.html**
 
-Edit index.html and replace source src with the following url:
+Edit vod.html and replace source src with the following url:
 
 >http://localhost:8080/vod/bbb.mp4/index.m3u8
 
@@ -46,8 +50,10 @@ ex:
 
 **Step9: Add live.html to web server root directory**
 
->docker exec -it nginx bash
->wget https://raw.githubusercontent.com/keepwalking86/streaming/master/web/index.html -O /usr/share/nginx/html/live.html
+```
+docker exec -it nginx bash
+wget https://raw.githubusercontent.com/keepwalking86/streaming/master/web/index.html -O /usr/share/nginx/html/live.html
+```
 
 **Step6: Replace source src in live.html**
 
@@ -58,4 +64,3 @@ Edit index.html and replace source src with the following url:
 **Step10: Access live streaming via web browser**
 
 >http://localhost/live.html
-
